@@ -1,16 +1,18 @@
 require('../mocks/fetchSimulator');
+// const { expect } = require('chai');
 const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
-const { expect } = require('@jest/globals');
+// const { expect } = require('@jest/globals');
 
 describe('1 - Teste a função fetchProducts', () => {
   it('verifica se fetchProducts é uma função', () =>{
     expect(typeof fetchProducts).toEqual('function')
   });
-  // it('verifica se a função, ao passar o parametro computador, a função fetch utiliza a URL correta', async ()=>{
-  //   expect(fetchProducts('computador').toHaveBeenCalledWith('`https://api.mercadolibre.com/sites/MLB/search?q=computador`'))
-  // })
+  it('verifica se a função, ao passar o parametro computador, a função fetch utiliza a URL correta', async ()=>{
+    fetchProducts('computador')
+    expect(fetch).toHaveBeenCalledTimes(1)
+  })
   it('testa se ao receber o argumento computador retorna o objeto esperado computadorSearch', async () => {
     expect(await fetchProducts('computador')).toEqual(computadorSearch)
   });
@@ -21,5 +23,4 @@ describe('1 - Teste a função fetchProducts', () => {
       expect(error.message).toBe('You must provide an url')
     }
   })
-  // fail('Teste vazio');
 });
