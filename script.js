@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
 // const { thumbnail } = require('./mocks/item');
 
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
@@ -89,6 +91,23 @@ async function lista() {
     classeItem.appendChild(createProductItemElement(obj));
   });
 }
+async function queijo() {
+  await fetchItem('MLB2663143313');
+  const all = document.querySelectorAll('.item__add');
+  all.forEach((element) => element.addEventListener('click', () => {
+     console.log('queijo'); 
+    }));
+} 
+// const addToCart = async () => {
+//   await fetchItem('MLB1341706310');
+//   const allItems = document.querySelectorAll('.item__add');
+//   allItems.forEach((item) => {
+//   item.addEventListener('click', () => {
+//   console.log('oooi');
+//   });
+//   });
+//   }; 
+queijo();
 window.onload = () => { lista(); };
 
 // eventtarget=event
