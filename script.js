@@ -98,15 +98,6 @@ async function queijo() {
      console.log('queijo'); 
     }));
 } 
-// const addToCart = async () => {
-//   await fetchItem('MLB1341706310');
-//   const allItems = document.querySelectorAll('.item__add');
-//   allItems.forEach((item) => {
-//   item.addEventListener('click', () => {
-//   console.log('oooi');
-//   });
-//   });
-//   }; 
 queijo();
 window.onload = () => { lista(); };
 
