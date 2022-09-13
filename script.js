@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const { thumbnail } = require('./mocks/item');
+
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -28,7 +30,6 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
-
 /**
  * Função responsável por criar e retornar o elemento do produto.
  * @param {Object} product - Objeto do produto. 
@@ -40,12 +41,12 @@ const createCustomElement = (element, className, innerText) => {
 const createProductItemElement = ({ id, title, thumbnail }) => {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item_id', id));
   section.appendChild(createCustomElement('span', 'item__title', title));
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  
   return section;
 };
 
@@ -54,7 +55,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {Element} product - Elemento do produto.
  * @returns {string} ID do produto.
  */
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+ const getIdFromProductItem = (product) => product.querySelector('span.item_id').innerText;
 
 /**
  * Função responsável por criar e retornar um item do carrinho.
@@ -68,8 +69,26 @@ const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
+// criar uma função loading antes da função assincrona, e depois remove-la com a função assincrona.
+const getResults = async () => {
+  const result = await fetchProducts('computador');
+  // console.log(result.results);
+  return result.results;
+};
 
-window.onload = () => { };
+// getResults();
+// adicionar ao DOM com forEach
+async function lista() {
+  const resultado = await getResults();
+  const classeItem = document.getElementsByClassName('items')[0];
+  resultado.forEach((element) => {
+    const obj = { id: element.id, title: element.title, thumbnail: element.thumbnail }; 
+    classeItem.appendChild(createProductItemElement(obj));
+  });
+}
+window.onload = () => { lista(); };
+
+// eventtarget=event
