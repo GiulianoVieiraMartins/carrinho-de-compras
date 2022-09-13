@@ -91,14 +91,21 @@ async function lista() {
     classeItem.appendChild(createProductItemElement(obj));
   });
 }
-async function queijo() {
+async function select(event) {
+  const itemId = event.target.parentNode.firstChild.innerText;
+  const item = await fetchItem(itemId);
+  const obj = { id: item.id, title: item.title, price: item.price };
+  [classeItem] = document.getElementsByClassName('cart__items');
+  classeItem.appendChild(createCartItemElement(obj));
+  console.log(obj);
+  // sessionStorage.setItem();
+}
+async function adicionarAoCarro() {
   await fetchItem('MLB2663143313');
   const all = document.querySelectorAll('.item__add');
-  all.forEach((element) => element.addEventListener('click', () => {
-     console.log('queijo'); 
-    }));
+  all.forEach((element) => element.addEventListener('click', select));
 } 
-queijo();
+adicionarAoCarro();
 window.onload = () => { lista(); };
 
 // eventtarget=event
