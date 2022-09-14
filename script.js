@@ -102,6 +102,7 @@ const [classeCart] = document.getElementsByClassName('cart__items');
 async function select(event) {
   const itemId = event.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemId);
+  // console.log(item);
   // const obj = { id: item.id, title: item.title, price: item.price };
   classeCart.appendChild(createCartItemElement(item));
   // console.log(obj);
@@ -114,16 +115,19 @@ async function adicionaEscutador() {
 } 
 // adicionaEscutador();
 
-function removeClass() {
-  const itensCarro = document.getElementsByClassName('cart__item');
-  for (let i = 0; i < itensCarro.length; i += 1) {
-    itensCarro[i].remove();
-  }
-}
+// function removeClass() {
+//   const itensCarro = document.querySelector('.cart__items');
+//   for (let i = 0; i < itensCarro.length; i += 1) {
+//     itensCarro[i].remove();
+//   }
+// }
 
   [itemClasse] = document.getElementsByClassName('empty-cart');
-  itemClasse.addEventListener('click', removeClass);
+  itemClasse.addEventListener('click', () => {
+    const itensCarro = document.querySelector('.cart__items');
+    itensCarro.innerHTML = '';
+  });
 
-  window.onload = () => { criarLista(); adicionaEscutador(); };
+  window.onload = async () => { await criarLista(); await adicionaEscutador(); };
 
 // eventtarget=event
