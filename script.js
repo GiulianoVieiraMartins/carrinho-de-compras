@@ -1,12 +1,25 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const saveCartItems = require("./helpers/saveCartItems");
+
 // const { fetchItem } = require("./helpers/fetchItem");
 
 // const { thumbnail } = require('./mocks/item');
 
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
+const [header] = document.getElementsByClassName('header');
+const carregando = document.createElement('p');
+carregando.className = ('loading');
+const espera = () => {
+  carregando.innerText = 'carregando';
+  header.appendChild(carregando);
+};
+function carregou() {
+  const [q] = document.getElementsByClassName('loading');
+ header.removeChild(q);
+}
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
  * @param {string} imageSource - URL da imagem.
@@ -90,12 +103,14 @@ const getResults = async () => {
 // getResults();
 // adicionar ao DOM com forEach
 async function criarLista() {
+  espera();
   const resultado = await getResults();
   const classeItem = document.getElementsByClassName('items')[0];
+  carregou();
   resultado.forEach((element) => {
     const obj = { id: element.id, title: element.title, thumbnail: element.thumbnail }; 
     classeItem.appendChild(createProductItemElement(obj));
-  });
+  }); 
 }
 const [classeCart] = document.getElementsByClassName('cart__items');
 // função para adicionar ao carrinho
@@ -104,10 +119,14 @@ async function select(event) {
   const item = await fetchItem(itemId);
   // console.log(item);
   // const obj = { id: item.id, title: item.title, price: item.price };
+  const itensCarro = document.querySelector('.cart__items');
+  localStorage.setItem('cartItems', itensCarro);
   classeCart.appendChild(createCartItemElement(item));
   // console.log(obj);
-  // sessionStorage.setItem();
 }
+// spread operator
+// pegar os filhos todos
+
 async function adicionaEscutador() {
   await fetchItem('MLB2663143313');
   const all = document.querySelectorAll('.item__add');
@@ -123,11 +142,19 @@ async function adicionaEscutador() {
 // }
 
   [itemClasse] = document.getElementsByClassName('empty-cart');
+  const itensCarro = document.querySelector('.cart__items');
   itemClasse.addEventListener('click', () => {
-    const itensCarro = document.querySelector('.cart__items');
     itensCarro.innerHTML = '';
+    localStorage.clear();
+    sessionStorage.clear();
   });
-
-  window.onload = async () => { await criarLista(); await adicionaEscutador(); };
+  const chamadaCarro = () => {
+  if (getSavedCartItems() === undefined) {
+    console.log('CarrinhoVazio');
+  } else {
+  itensCarro.innerHTML = localStorage.getItem('cartItems');
+}
+};
+  window.onload = async () => { await criarLista(); await adicionaEscutador(); chamadaCarro(); };
 
 // eventtarget=event
