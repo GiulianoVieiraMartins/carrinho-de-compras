@@ -67,11 +67,17 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
+// Função para remover do carrinho
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  // console.log(event.target);
+};
+
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 };
 // criar uma função loading antes da função assincrona, e depois remove-la com a função assincrona.
@@ -83,7 +89,7 @@ const getResults = async () => {
 
 // getResults();
 // adicionar ao DOM com forEach
-async function lista() {
+async function criarLista() {
   const resultado = await getResults();
   const classeItem = document.getElementsByClassName('items')[0];
   resultado.forEach((element) => {
@@ -91,21 +97,33 @@ async function lista() {
     classeItem.appendChild(createProductItemElement(obj));
   });
 }
+const [classeCart] = document.getElementsByClassName('cart__items');
+// função para adicionar ao carrinho
 async function select(event) {
   const itemId = event.target.parentNode.firstChild.innerText;
   const item = await fetchItem(itemId);
-  const obj = { id: item.id, title: item.title, price: item.price };
-  [classeItem] = document.getElementsByClassName('cart__items');
-  classeItem.appendChild(createCartItemElement(obj));
-  console.log(obj);
+  // const obj = { id: item.id, title: item.title, price: item.price };
+  classeCart.appendChild(createCartItemElement(item));
+  // console.log(obj);
   // sessionStorage.setItem();
 }
-async function adicionarAoCarro() {
+async function adicionaEscutador() {
   await fetchItem('MLB2663143313');
   const all = document.querySelectorAll('.item__add');
   all.forEach((element) => element.addEventListener('click', select));
 } 
-adicionarAoCarro();
-window.onload = () => { lista(); };
+// adicionaEscutador();
+
+function removeClass() {
+  const itensCarro = document.getElementsByClassName('cart__item');
+  for (let i = 0; i < itensCarro.length; i += 1) {
+    itensCarro[i].remove();
+  }
+}
+
+  [itemClasse] = document.getElementsByClassName('empty-cart');
+  itemClasse.addEventListener('click', removeClass);
+
+  window.onload = () => { criarLista(); adicionaEscutador(); };
 
 // eventtarget=event
