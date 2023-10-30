@@ -143,6 +143,7 @@ async function adicionaEscutador() {
 
   [itemClasse] = document.getElementsByClassName('empty-cart');
   const itensCarro = document.querySelector('.cart__items');
+  
   itemClasse.addEventListener('click', () => {
     itensCarro.innerHTML = '';
     localStorage.clear();
