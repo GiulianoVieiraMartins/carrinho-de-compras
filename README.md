@@ -1,4 +1,4 @@
-# :construction: README em construção ! :construction:
+README
 Este projeto abstraiu conceitos de back end e me permitiu testar minhas habilidades em relação a buscar items em uma api e salva-los localmente para depois manipula-los no front end. O codigo da pasta helpers é que se trata da implementação feita por mim.
 <!-- Olá, Tryber!
 Esse é apenas um arquivo inicial para o README do seu projeto.
